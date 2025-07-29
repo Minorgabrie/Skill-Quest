@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillQuest - Curso</title>
+    <link rel="stylesheet" href="course-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Course Header -->
+    <header class="course-header">
+        <div class="header-left">
+            <button class="btn-back" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+                <span>Voltar</span>
+            </button>
+            <div class="course-info">
+                <h1 id="courseTitle">HTML & CSS Básico</h1>
+                <div class="course-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="courseProgress" style="width: 0%"></div>
+                    </div>
+                    <span class="progress-text" id="courseProgressText">0% Completo</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="header-right">
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">
+                    <div class="avatar-base">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="avatar-accessories" id="userAccessories">
+                        <!-- Acessórios do usuário -->
+                    </div>
+                </div>
+                <div class="user-details">
+                    <span class="user-name" id="userName">Aventureiro</span>
+                    <div class="user-level">
+                        <span>Nível</span>
+                        <span class="level-number" id="userLevel">1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="course-main">
+        <!-- Lesson Sidebar -->
+        <aside class="lesson-sidebar">
+            <div class="sidebar-header">
+                <h3>Lições</h3>
+                <div class="lesson-progress">
+                    <span id="lessonProgress">0 de 15</span>
+                </div>
+            </div>
+            <div class="lesson-list" id="lessonList">
+                <!-- Lições serão carregadas dinamicamente -->
+            </div>
+        </aside>
+
+        <!-- Lesson Content -->
+        <section class="lesson-content">
+            <div class="lesson-header">
+                <h2 id="lessonTitle">Bem-vindo ao HTML!</h2>
+                <div class="lesson-meta">
+                    <span class="lesson-number" id="lessonNumber">Lição 1</span>
+                    <span class="lesson-duration" id="lessonDuration">~5 min</span>
+                </div>
+            </div>
+
+            <div class="lesson-body" id="lessonBody">
+                <!-- Conteúdo da lição será carregado dinamicamente -->
+            </div>
+
+            <div class="lesson-navigation">
+                <button class="btn btn-secondary" id="prevBtn" onclick="previousLesson()" disabled>
+                    <i class="fas fa-chevron-left"></i>
+                    Anterior
+                </button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextLesson()">
+                    Próximo
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Code Editor -->
+        <aside class="code-editor">
+            <div class="editor-header">
+                <h3>Editor de Código</h3>
+                <div class="editor-controls">
+                    <button class="btn btn-sm" onclick="resetCode()" title="Resetar código">
+                        <i class="fas fa-undo"></i>
+                    </button>
+                    <button class="btn btn-sm" onclick="runCode()" title="Executar código">
+                        <i class="fas fa-play"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="editor-content">
+                <textarea id="codeEditor" placeholder="Digite seu código aqui..."></textarea>
+            </div>
+            <div class="editor-output">
+                <div class="output-header">
+                    <h4>Resultado</h4>
+                    <button class="btn btn-sm" onclick="clearOutput()" title="Limpar resultado">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="output-content" id="outputContent">
+                    <p class="output-placeholder">O resultado do seu código aparecerá aqui...</p>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Character Evolution Modal -->
+    <div id="evolutionModal" class="modal">
+        <div class="modal-content evolution-modal">
+            <div class="evolution-header">
+                <h2>🎉 Evolução do Personagem!</h2>
+                <p>Parabéns! Você completou uma missão e seu personagem evoluiu!</p>
+            </div>
+            <div class="evolution-content">
+                <div class="character-evolution">
+                    <div class="character-before">
+                        <h4>Antes</h4>
+                        <div class="character-avatar" id="characterBefore">
+                            <!-- Personagem antes da evolução -->
+                        </div>
+                    </div>
+                    <div class="evolution-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="character-after">
+                        <h4>Depois</h4>
+                        <div class="character-avatar" id="characterAfter">
+                            <!-- Personagem depois da evolução -->
+                        </div>
+                    </div>
+                </div>
+                <div class="evolution-details">
+                    <h3>Novo Acessório Desbloqueado!</h3>
+                    <div class="accessory-preview" id="newAccessory">
+                        <!-- Preview do novo acessório -->
+                    </div>
+                    <p id="accessoryDescription">Descrição do acessório</p>
+                </div>
+            </div>
+            <div class="evolution-footer">
+                <button class="btn btn-primary" onclick="closeEvolutionModal()">
+                    Continuar Aprendizado
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievement Modal -->
+    <div id="achievementModal" class="modal">
+        <div class="modal-content achievement-modal">
+            <div class="achievement-header">
+                <i class="fas fa-trophy"></i>
+                <h2>Conquista Desbloqueada!</h2>
+            </div>
+            <div class="achievement-content">
+                <div class="achievement-icon" id="achievementIcon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h3 id="achievementTitle">Primeira Missão</h3>
+                <p id="achievementDescription">Você completou sua primeira missão!</p>
+                <div class="achievement-reward">
+                    <span>Recompensa: +50 XP</span>
+                </div>
+            </div>
+            <div class="achievement-footer">
+                <button class="btn btn-primary" onclick="closeAchievementModal()">
+                    Incrível!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Level Up Modal -->
+    <div id="levelUpModal" class="modal">
+        <div class="modal-content levelup-modal">
+            <div class="levelup-header">
+                <i class="fas fa-level-up-alt"></i>
+                <h2>🎊 Subiu de Nível!</h2>
+            </div>
+            <div class="levelup-content">
+                <div class="level-display">
+                    <div class="old-level">
+                        <span class="level-number" id="oldLevel">1</span>
+                        <span class="level-label">Nível</span>
+                    </div>
+                    <div class="level-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="new-level">
+                        <span class="level-number" id="newLevel">2</span>
+                        <span class="level-label">Nível</span>
+                    </div>
+                </div>
+                <div class="levelup-rewards">
+                    <h3>Novas Recompensas Desbloqueadas!</h3>
+                    <div class="rewards-list" id="rewardsList">
+                        <!-- Lista de recompensas -->
+                    </div>
+                </div>
+            </div>
+            <div class="levelup-footer">
+                <button class="btn btn-primary" onclick="closeLevelUpModal()">
+                    Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h3>Carregando Lição...</h3>
+            <p id="loadingText">Preparando conteúdo para você</p>
+        </div>
+    </div>
+
+    <script src="course.js"></script>
+</body>
+</html> 

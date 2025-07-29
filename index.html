@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillQuest - Aprenda Programação com Gamificação</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <i class="fas fa-code"></i>
+                <span>SkillQuest</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#catalog">Catálogo</a></li>
+                <li><a href="#profile">Perfil</a></li>
+                <li><a href="#leaderboard">Ranking</a></li>
+            </ul>
+            <div class="nav-auth">
+                <button class="btn btn-secondary" onclick="openLoginModal()">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Entrar</span>
+                </button>
+                <button class="btn btn-primary" onclick="openRegisterModal()">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Cadastrar</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                Aprenda a <span class="highlight">Programar</span> com seu <span class="highlight">Personagem</span>
+            </h1>
+            <p class="hero-subtitle">
+                Evolua seu personagem enquanto aprende programação. Cada missão completa faz seu herói crescer e desbloqueia novos acessórios únicos!
+            </p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">10K+</span>
+                    <span class="stat-label">Aventureiros</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Missões</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100+</span>
+                    <span class="stat-label">Acessórios</span>
+                </div>
+            </div>
+            <div class="hero-buttons">
+                <button class="btn btn-primary btn-large" onclick="startLearning()">
+                    <i class="fas fa-play"></i>
+                    Começar Aprendizado
+                </button>
+                <button class="btn btn-secondary btn-large" onclick="scrollToSection('catalog')">
+                    <i class="fas fa-book"></i>
+                    Ver Cursos
+                </button>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="character-showcase">
+                <div class="character-avatar" id="heroAvatar">
+                    <div class="character-base">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="character-accessories" id="characterAccessories">
+                        <!-- Acessórios serão adicionados dinamicamente -->
+                    </div>
+                </div>
+                <div class="character-info">
+                    <h3>Seu Herói</h3>
+                    <p>Nível 1 - Iniciante</p>
+                    <div class="character-progress">
+                        <div class="xp-bar">
+                            <div class="xp-fill" id="heroXP" style="width: 0%"></div>
+                        </div>
+                        <span class="xp-text">0 / 100 XP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Catalog -->
+    <section id="catalog" class="catalog">
+        <div class="container">
+            <h2 class="section-title">Catálogo de Cursos</h2>
+            <p class="section-subtitle">Escolha seu caminho de aprendizado</p>
+            
+            <div class="course-grid">
+                <!-- HTML Course -->
+                <div class="course-card" onclick="startCourse('html')">
+                    <div class="course-header">
+                        <div class="course-icon">
+                            <i class="fab fa-html5"></i>
+                        </div>
+                        <div class="course-badge">Popular</div>
+                    </div>
+                    <h3>HTML & CSS Básico</h3>
+                    <p>Aprenda a criar páginas web do zero. Domine HTML e CSS em missões progressivas.</p>
+                    <div class="course-features">
+                        <span><i class="fas fa-clock"></i> 8 horas</span>
+                        <span><i class="fas fa-signal"></i> Iniciante</span>
+                        <span><i class="fas fa-trophy"></i> 15 missões</span>
+                    </div>
+                    <div class="course-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="htmlProgress" style="width: 0%"></div>
+                        </div>
+                        <span class="progress-text" id="htmlProgressText">0% Completo</span>
+                    </div>
+                    <div class="course-stats">
+                        <div class="stat">
+                            <span class="stat-value" id="htmlLevel">1</span>
+                            <span class="stat-label">Nível</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" id="htmlXP">0</span>
+                            <span class="stat-label">XP</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" id="htmlAccessories">0</span>
+                            <span class="stat-label">Acessórios</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- JavaScript Course -->
+                <div class="course-card" onclick="startCourse('javascript')">
+                    <div class="course-header">
+                        <div class="course-icon">
+                            <i class="fab fa-js-square"></i>
+                        </div>
+                        <div class="course-badge">Novo</div>
+                    </div>
+                    <h3>JavaScript Fundamentos</h3>
+                    <p>Domine a linguagem da web. Aprenda JavaScript com exercícios práticos e interativos.</p>
+                    <div class="course-features">
+                        <span><i class="fas fa-clock"></i> 12 horas</span>
+                        <span><i class="fas fa-signal"></i> Intermediário</span>
+                        <span><i class="fas fa-trophy"></i> 20 missões</span>
+                    </div>
+                    <div class="course-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="jsProgress" style="width: 0%"></div>
+                        </div>
+                        <span class="progress-text" id="jsProgressText">0% Completo</span>
+                    </div>
+                    <div class="course-stats">
+                        <div class="stat">
+                            <span class="stat-value" id="jsLevel">1</span>
+                            <span class="stat-label">Nível</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" id="jsXP">0</span>
+                            <span class="stat-label">XP</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" id="jsAccessories">0</span>
+                            <span class="stat-label">Acessórios</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Python Course -->
+                <div class="course-card" onclick="startCourse('python')">
+                    <div class="course-header">
+                        <div class="course-icon">
+                            <i class="fab fa-python"></i>
+                        </div>
+                        <div class="course-badge">Em Breve</div>
+                    </div>
+                    <h3>Python para Iniciantes</h3>
+                    <p>Descubra o poder do Python. Aprenda programação com uma das linguagens mais populares.</p>
+                    <div class="course-features">
+                        <span><i class="fas fa-clock"></i> 15 horas</span>
+                        <span><i class="fas fa-signal"></i> Iniciante</span>
+                        <span><i class="fas fa-trophy"></i> 25 missões</span>
+                    </div>
+                    <div class="course-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="pythonProgress" style="width: 0%"></div>
+                        </div>
+                        <span class="progress-text" id="pythonProgressText">Em breve</span>
+                    </div>
+                    <div class="course-stats">
+                        <div class="stat">
+                            <span class="stat-value">-</span>
+                            <span class="stat-label">Nível</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">-</span>
+                            <span class="stat-label">XP</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">-</span>
+                            <span class="stat-label">Acessórios</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section id="profile" class="profile">
+        <div class="container">
+            <h2 class="section-title">Seu Perfil</h2>
+            <div class="profile-content">
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar" id="profileAvatar">
+                            <div class="avatar-base">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="avatar-accessories" id="profileAccessories">
+                                <!-- Acessórios do perfil -->
+                            </div>
+                        </div>
+                        <div class="profile-info">
+                            <h3 id="profileName">Aventureiro</h3>
+                            <p id="profileLevel">Nível 1 - Iniciante</p>
+                            <div class="profile-xp">
+                                <div class="xp-bar">
+                                    <div class="xp-fill" id="profileXP" style="width: 0%"></div>
+                                </div>
+                                <span class="xp-text" id="profileXPText">0 / 100 XP</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat-grid">
+                            <div class="stat-item">
+                                <span class="stat-number" id="totalXP">0</span>
+                                <span class="stat-label">XP Total</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="missionsCompleted">0</span>
+                                <span class="stat-label">Missões</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="accessoriesUnlocked">0</span>
+                                <span class="stat-label">Acessórios</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="daysStreak">0</span>
+                                <span class="stat-label">Dias Seguidos</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leaderboard Section -->
+    <section id="leaderboard" class="leaderboard">
+        <div class="container">
+            <h2 class="section-title">Ranking dos Aventureiros</h2>
+            <div class="leaderboard-tabs">
+                <button class="tab-btn active" onclick="showLeaderboard('global')">Ranking Global</button>
+                <button class="tab-btn" onclick="showLeaderboard('html')">HTML Masters</button>
+                <button class="tab-btn" onclick="showLeaderboard('javascript')">JavaScript Wizards</button>
+            </div>
+            <div class="leaderboard-list" id="leaderboardList">
+                <!-- Ranking será carregado dinamicamente -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>SkillQuest</h4>
+                    <p>Aprenda programação de forma gamificada e divertida.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Cursos</h4>
+                    <ul>
+                        <li><a href="#catalog">HTML & CSS</a></li>
+                        <li><a href="#catalog">JavaScript</a></li>
+                        <li><a href="#catalog">Python</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Suporte</h4>
+                    <ul>
+                        <li><a href="#">Central de Ajuda</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contato</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 SkillQuest. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <div class="auth-form">
+                <h2>Entrar na Aventura</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Senha</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Entrar</button>
+                </form>
+                <p>Não tem conta? <a href="#" onclick="switchToRegister()">Cadastre-se</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeRegisterModal()">&times;</span>
+            <div class="auth-form">
+                <h2>Criar Conta</h2>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="registerName">Nome do Aventureiro</label>
+                        <input type="text" id="registerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Senha</label>
+                        <input type="password" id="registerPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Criar Conta</button>
+                </form>
+                <p>Já tem conta? <a href="#" onclick="switchToLogin()">Faça login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievement Notification -->
+    <div id="achievementNotification" class="achievement-notification">
+        <div class="achievement-content">
+            <i class="fas fa-trophy"></i>
+            <div class="achievement-text">
+                <h4 id="achievementTitle">Conquista Desbloqueada!</h4>
+                <p id="achievementDesc">Descrição da conquista</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

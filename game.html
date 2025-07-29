@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillQuest - Jogo</title>
+    <link rel="stylesheet" href="game-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Game Header -->
+    <header class="game-header">
+        <div class="header-left">
+            <button class="btn-back" onclick="goBack()" title="Voltar ao site principal">
+                <i class="fas fa-arrow-left"></i>
+                <span>Voltar</span>
+            </button>
+            <div class="game-title">
+                <i class="fas fa-sword"></i>
+                <span>SkillQuest</span>
+            </div>
+        </div>
+        
+        <div class="player-info">
+            <div class="player-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="player-details">
+                <span class="player-name" id="playerName">Aventureiro</span>
+                <div class="player-level">
+                    <span>Nível</span>
+                    <span class="level-number" id="playerLevel">1</span>
+                </div>
+            </div>
+            <div class="player-xp">
+                <div class="xp-bar">
+                    <div class="xp-fill" id="xpFill"></div>
+                </div>
+                <span class="xp-text" id="xpText">0 / 100 XP</span>
+            </div>
+        </div>
+        
+        <div class="game-controls">
+            <button class="control-btn" onclick="toggleInventory()" title="Inventário (I)">
+                <i class="fas fa-briefcase"></i>
+            </button>
+            <button class="control-btn" onclick="toggleMap()" title="Mapa (M)">
+                <i class="fas fa-map"></i>
+            </button>
+            <button class="control-btn" onclick="toggleQuestLog()" title="Missões (Q)">
+                <i class="fas fa-scroll"></i>
+            </button>
+            <button class="control-btn" onclick="toggleSettings()" title="Configurações">
+                <i class="fas fa-cog"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Game Area -->
+    <main class="game-main">
+        <!-- Course Selection Screen -->
+        <div id="courseSelection" class="course-selection">
+            <div class="selection-header">
+                <h1>Escolha sua Aventura</h1>
+                <p>Selecione o curso que deseja explorar</p>
+            </div>
+            
+            <div class="course-grid">
+                <div class="course-card" onclick="selectCourse('html')">
+                    <div class="course-icon">
+                        <i class="fab fa-html5"></i>
+                    </div>
+                    <h3>HTML Master</h3>
+                    <p>Domine a linguagem de marcação web em uma jornada épica pelo Reino Digital.</p>
+                    <div class="course-stats">
+                        <div class="stat">
+                            <span class="stat-value" id="htmlLevel">1</span>
+                            <span class="stat-label">Nível</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" id="htmlProgress">0%</span>
+                            <span class="stat-label">Progresso</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" id="htmlBadges">0</span>
+                            <span class="stat-label">Insígnias</span>
+                        </div>
+                    </div>
+                    <div class="course-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="htmlProgressBar"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-card" onclick="selectCourse('typing')">
+                    <div class="course-icon">
+                        <i class="fas fa-keyboard"></i>
+                    </div>
+                    <h3>Speed Typing</h3>
+                    <p>Aprimore sua velocidade de digitação em desafios emocionantes de velocidade e precisão.</p>
+                    <div class="course-stats">
+                        <div class="stat">
+                            <span class="stat-value" id="typingLevel">1</span>
+                            <span class="stat-label">Nível</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" id="typingWPM">0</span>
+                            <span class="stat-label">WPM</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" id="typingBadges">0</span>
+                            <span class="stat-label">Insígnias</span>
+                        </div>
+                    </div>
+                    <div class="course-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="typingProgressBar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game World -->
+        <div id="gameWorld" class="game-world" style="display: none;">
+            <div class="world-container">
+                <div class="world-map" id="worldMap">
+                    <!-- O mapa do mundo será renderizado aqui -->
+                </div>
+                <div class="player-character" id="playerCharacter">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quest Interface -->
+        <div id="questInterface" class="quest-interface" style="display: none;">
+            <div class="quest-header">
+                <h2 id="questTitle">Missão Atual</h2>
+                <button class="close-quest" onclick="closeQuest()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="quest-content" id="questContent">
+                <!-- Conteúdo da missão será carregado aqui -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Side Panels -->
+    <aside class="side-panels">
+        <!-- Inventory Panel -->
+        <div id="inventoryPanel" class="side-panel inventory-panel">
+            <div class="panel-header">
+                <h3><i class="fas fa-briefcase"></i> Inventário</h3>
+                <button class="close-panel" onclick="toggleInventory()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="panel-content">
+                <div id="inventoryItems" class="inventory-items">
+                    <p class="empty-message">Seu inventário está vazio</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Panel -->
+        <div id="mapPanel" class="side-panel map-panel">
+            <div class="panel-header">
+                <h3><i class="fas fa-map"></i> Mapa do Mundo</h3>
+                <button class="close-panel" onclick="toggleMap()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="panel-content">
+                <div id="worldMapOverview" class="world-map-overview">
+                    <!-- Visão geral do mapa será renderizada aqui -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Quest Log Panel -->
+        <div id="questLogPanel" class="side-panel quest-log-panel">
+            <div class="panel-header">
+                <h3><i class="fas fa-scroll"></i> Log de Missões</h3>
+                <button class="close-panel" onclick="toggleQuestLog()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="panel-content">
+                <div id="questLogContent" class="quest-log-content">
+                    <!-- Lista de missões será carregada aqui -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Panel -->
+        <div id="settingsPanel" class="side-panel settings-panel">
+            <div class="panel-header">
+                <h3><i class="fas fa-cog"></i> Configurações</h3>
+                <button class="close-panel" onclick="toggleSettings()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="panel-content">
+                <div class="settings-section">
+                    <h4>Controles</h4>
+                    <div class="control-help">
+                        <p><kbd>WASD</kbd> ou <kbd>Setas</kbd> - Mover personagem</p>
+                        <p><kbd>Enter</kbd> - Interagir</p>
+                        <p><kbd>I</kbd> - Inventário</p>
+                        <p><kbd>M</kbd> - Mapa</p>
+                        <p><kbd>Q</kbd> - Missões</p>
+                        <p><kbd>ESC</kbd> - Pausar</p>
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h4>Áudio</h4>
+                    <div class="setting-item">
+                        <label>Efeitos Sonoros</label>
+                        <input type="range" id="sfxVolume" min="0" max="100" value="50">
+                    </div>
+                    <div class="setting-item">
+                        <label>Música</label>
+                        <input type="range" id="musicVolume" min="0" max="100" value="30">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Modals -->
+    <div id="tutorialModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="tutorialTitle">Tutorial</h3>
+                <button class="close-modal" onclick="closeTutorial()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="tutorialContent">
+                <!-- Conteúdo do tutorial será carregado aqui -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeTutorial()">Pular</button>
+                <button class="btn btn-primary" onclick="startTutorial()">Começar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="challengeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="challengeTitle">Desafio</h3>
+                <button class="close-modal" onclick="closeChallenge()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="challengeContent">
+                <!-- Conteúdo do desafio será carregado aqui -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeChallenge()">Cancelar</button>
+                <button class="btn btn-primary" onclick="submitChallenge()">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="speedTestModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Teste de Velocidade</h3>
+                <button class="close-modal" onclick="closeSpeedTest()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="speed-test-info">
+                    <div class="test-stats">
+                        <div class="stat">
+                            <span class="stat-label">WPM</span>
+                            <span class="stat-value" id="currentWPM">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Precisão</span>
+                            <span class="stat-value" id="currentAccuracy">0%</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Tempo</span>
+                            <span class="stat-value" id="testTimer">60s</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="typing-area">
+                    <div class="text-display" id="textDisplay">
+                        <!-- Texto para digitar será carregado aqui -->
+                    </div>
+                    <textarea id="typingInput" placeholder="Comece a digitar..." disabled></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeSpeedTest()">Cancelar</button>
+                <button class="btn btn-primary" id="startTestBtn" onclick="startSpeedTest()">Iniciar Teste</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievement Notification -->
+    <div id="achievementNotification" class="achievement-notification">
+        <div class="achievement-content">
+            <i class="fas fa-trophy"></i>
+            <div class="achievement-text">
+                <h4 id="achievementTitle">Conquista Desbloqueada!</h4>
+                <p id="achievementDesc">Descrição da conquista</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h3>Carregando Aventura...</h3>
+            <p id="loadingText">Preparando o mundo para você</p>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html> 
